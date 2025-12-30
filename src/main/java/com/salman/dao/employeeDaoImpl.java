@@ -110,12 +110,9 @@ public class employeeDaoImpl implements employeeDao {
 	public List getAllEmp() throws SQLException {
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(GETALLEMP);
-		while(rs.next()) {
-			rs.getInt("id");
-			rs.getString("name");
-			rs.getInt("salary");
-			System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+ rs.getString(3)+"\t"+rs.getInt(4));
-		}
+		
+//		list lst = new list(4,null);
+		
 		return null;
 	}
 
