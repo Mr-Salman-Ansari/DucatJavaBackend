@@ -82,6 +82,7 @@ public class employeeDaoImpl implements employeeDao {
 	     employee e = null;
 			if (rs.next())
 			{
+				e=new employee();
 				e.setID(rs.getInt(1));
 				e.setName(rs.getString(2));
 				e.setGender(rs.getString(3));
@@ -89,7 +90,7 @@ public class employeeDaoImpl implements employeeDao {
 			//System.out.println(rs.getInt("id")+"\t"+rs.getString("name")+"\t"+ rs.getString("gender")+"\t"+rs.getInt("salary"));
 
 			}
-		return null;
+		return e;
 		
 	}
 	
@@ -106,16 +107,29 @@ public class employeeDaoImpl implements employeeDao {
 	public employee getEmpByName(String Name) throws SQLException {
 		Statement statement= connection.createStatement();
 	     ResultSet rs = statement.executeQuery(String.format(GETEMPNAME, Name));
+	     employee e = null;
 			if (rs.next())
 			{
-			rs.getInt("id");
-			rs.getString("name");
-			rs.getInt("salary");
-			System.out.println(rs.getInt("id")+"\t"+rs.getString("name")+"\t"+ rs.getString("gender")+"\t"+rs.getInt("salary"));
-
+		    e=new employee();
+			e.setID(rs.getInt(1));
+			e.setName(rs.getString(2));
+			e.setGender(rs.getString(3));
+			e.setSalary(rs.getInt(4));
+			
 			}
-		return null;
+		return e;
 	}
+	
+	public void printEmpByName(String Name) throws SQLException {
+		Statement statement= connection.createStatement();
+	     ResultSet rs = statement.executeQuery(String.format(GETEMPNAME, Name));
+	     
+	     while(rs.next()) {
+	    	 System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+ rs.getString(3)+"\t"+rs.getInt(4));
+	     }
+	    
+	}
+	
 
 	@Override
 	public List getAllEmp() throws SQLException {

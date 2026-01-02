@@ -16,6 +16,7 @@ public interface employeeDao {
 	public void printEmpById(int ID) throws SQLException;
 	
 	public employee getEmpByName(String Name) throws SQLException;
+	public void printEmpByName(String Name) throws SQLException;
 	
 	public List getAllEmp() throws SQLException;
 	
