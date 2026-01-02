@@ -23,9 +23,11 @@ public class mainRunner {
 		
 		//eDau.getEmpById(3);
 		//eDau.getEmpByName("Salman");
-		eDau.getAllEmp();
+		eDau.getEmpByName("Salman");
+
 		System.out.println("..................................");
-		eDau.printAllEmp();
+		// this is called sql injection
+		//eDau.printEmpByName("Salman 'or' 1=1");
 		
 		
 		/* 2nd way
