@@ -24,8 +24,9 @@ public class mainRunner {
 		//eDau.getEmpById(3);
 		//eDau.getEmpByName("Salman");
 		eDau.getAllEmp();
+
 		System.out.println("..................................");
-		eDau.printAllEmp();
+		eDau.printEmpById(3);
 		
 		
 		/* 2nd way

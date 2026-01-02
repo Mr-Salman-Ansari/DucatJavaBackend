@@ -79,16 +79,27 @@ public class employeeDaoImpl implements employeeDao {
 	public employee getEmpById(int ID) throws SQLException {
 		Statement statement= connection.createStatement();
 	     ResultSet rs = statement.executeQuery(String.format(GETEMPID, ID));
+	     employee e = null;
 			if (rs.next())
 			{
-			rs.getInt("id");
-			rs.getString("name");
-			rs.getInt("salary");
-			System.out.println(rs.getInt("id")+"\t"+rs.getString("name")+"\t"+ rs.getString("gender")+"\t"+rs.getInt("salary"));
+				e.setID(rs.getInt(1));
+				e.setName(rs.getString(2));
+				e.setGender(rs.getString(3));
+				e.setSalary(rs.getInt(4));
+			//System.out.println(rs.getInt("id")+"\t"+rs.getString("name")+"\t"+ rs.getString("gender")+"\t"+rs.getInt("salary"));
 
 			}
 		return null;
 		
+	}
+	
+	public void printEmpById(int ID) throws SQLException {
+		Statement statement= connection.createStatement();
+	     ResultSet rs = statement.executeQuery(String.format(GETEMPID,ID));
+	     
+	     while(rs.next()) {
+	    	 System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+ rs.getString(3)+"\t"+rs.getInt(4));
+	     }
 	}
 
 	@Override
@@ -121,9 +132,6 @@ public class employeeDaoImpl implements employeeDao {
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery("Select * from employee");
 		while(rs.next()) {
-			rs.getInt("id");
-			rs.getString("name");
-			rs.getInt("salary");
 			System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+ rs.getString(3)+"\t"+rs.getInt(4));
 		}
 		
