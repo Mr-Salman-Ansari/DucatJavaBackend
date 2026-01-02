@@ -16,14 +16,14 @@ public class mainRunner {
 	public static void main(String[] args) throws SQLException {
 		
 		employeeDao eDau = new employeeDaoImpl();
-		employee emp = new employee(11,"Rani","female", 75000);
+		employee emp = new employee(15,"MEENA","female", 75000);
 		//eDau.saveEmp(emp);
 		//eDau.updateEmp(emp);
 		//eDau.deleteEmpById(11);
 		
 		//eDau.getEmpById(3);
 		//eDau.getEmpByName("Salman");
-		eDau.getEmpByName("Salman");
+		eDau.deleteEmpByIdPs(13);
 
 		System.out.println("..................................");
 		// this is called sql injection

@@ -6,18 +6,18 @@ import com.salman.entity.employee;
 
 public interface employeeDao {
 	
-	public void saveEmp(employee e);
+	public void saveEmpPs(employee e);
 	
-	public void updateEmp(employee e);
+	public void updateEmpPs(employee e) throws SQLException;
 	
-	public void deleteEmpById(int ID);
+	public void deleteEmpByIdPs(int ID);
 	
-	public employee getEmpById(int ID) throws SQLException;
+	public employee getEmpByIdPs(int ID) throws SQLException;
 	
-	public employee getEmpByName(String Name) throws SQLException;
+	public employee getEmpByNamePs(String Name) throws SQLException;
 	
-	public List getAllEmp() throws SQLException;
+	public List getAllEmpPs() throws SQLException;
 	
-	public void printAllEmp() throws SQLException;
+	public void printAllEmpPs() throws SQLException;
 
 }

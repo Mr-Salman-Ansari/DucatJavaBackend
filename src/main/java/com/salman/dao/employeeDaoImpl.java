@@ -3,6 +3,7 @@ package com.salman.dao;
 import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,124 +12,81 @@ import com.salman.entity.employee;
 
 public class employeeDaoImpl implements employeeDao {
 	
-	private static final String INSERT_QUERY= "INSERT INTO EMPLOYEE (ID,NAME,GENDER,SALARY) VALUES(%d,'%s','%s',%d)";
-	private static final String UPDATE_QUERY= "UPDATE EMPLOYEE SET NAME='%s', GENDER='%s', SALARY=%d WHERE ID=%d";
-	private static final String DELETE_QUERY= "DELETE FROM EMPLOYEE WHERE ID=%d";
-	private static final String GETEMPID = "SELECT * FROM EMPLOYEE WHERE ID=%d";
-	private static final String GETEMPNAME = "SELECT * FROM EMPLOYEE WHERE NAME='%s'";
-	private static final String GETALLEMP = "SELECT * FROM EMPLOYEE ";
-	
-
 	static Connection connection = null;
 	
 	static {
 		try {
-			
 			connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","7599");
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
-	
 	@Override
-	public void saveEmp(employee e) {
-		try(Statement statement= connection.createStatement()) {
-			/* 2nd way */
-			statement.executeUpdate(String.format(INSERT_QUERY, e.getID(), e.getName(),e.getGender(),e.getSalary()));
-			System.out.println(String.format(INSERT_QUERY, e.getID(), e.getName(),e.getGender(),e.getSalary()));
-
+	public void saveEmpPs(employee e) {
+		 PreparedStatement ps;
+		 try {
+			ps = connection.prepareStatement("INSERT INTO EMPLOYEE VALUES(?, ?, ?, ?) ");
+			ps.setInt(1, e.getID());
+			ps.setString(2, e.getName());
+			ps.setString(3, e.getGender());
+			ps.setInt(4, e.getSalary());
 			
-			/* 1st way for implement with seorate comma 
-			statement.executeUpdate("insert into employee(ID,Name,gender,salary) values("+e.getID()+",'"+e.getName()+"','"+e.getGender()+"','"+e.getSalary()+"')");
-			 System.out.println("insert into employee(ID,Name,gender,salary) values("+e.getID()+",'"+e.getName()+"','"+e.getGender()+"','"+e.getSalary()+"')");
-			 */
-		
-		} catch (SQLException e1) {
+			ps.executeUpdate();
+		 } catch (SQLException e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		 }
+	}
+
+	@Override
+	public void updateEmpPs(employee e) throws SQLException {
+      PreparedStatement ps = connection.prepareStatement("UPDATE EMPLOYEE SET NAME=?, GENDER=?, SALARY=? WHERE ID=?");
+		
+		ps.setString(1, e.getName());
+		ps.setString(2, e.getGender());
+		ps.setInt(3, e.getSalary());
+		ps.setInt(4, e.getID());
+		
+		ps.executeUpdate();
+		
+	}
+
+	@Override
+	public void deleteEmpByIdPs(int ID) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM EMPLOYEE WHERE ID=?");
+			ps.setInt(1, ID);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
 
 	@Override
-	public void updateEmp(employee e) {
-			try(Statement statement= connection.createStatement()) {
-				statement.executeUpdate(String.format(UPDATE_QUERY, e.getName(),e.getGender(),e.getSalary(),e.getID()));
-				System.out.println(statement.executeUpdate(String.format(UPDATE_QUERY, e.getName(),e.getGender(),e.getSalary(),e.getID())));
-			} catch (SQLException e1) {
-				
-				e1.printStackTrace();
-			}
-		} 
-
-	@Override
-	public void deleteEmpById(int ID) {
-		try(Statement statement= connection.createStatement()) {
-			statement.executeUpdate(String.format(DELETE_QUERY,ID));
-		} catch (SQLException e1) {
-			
-			e1.printStackTrace();
-		}
-		
+	public employee getEmpByIdPs(int ID) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
+	public employee getEmpByNamePs(String Name) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List getAllEmpPs() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void printAllEmpPs() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 	
-	@Override
-	public employee getEmpById(int ID) throws SQLException {
-		Statement statement= connection.createStatement();
-	     ResultSet rs = statement.executeQuery(String.format(GETEMPID, ID));
-			if (rs.next())
-			{
-			rs.getInt("id");
-			rs.getString("name");
-			rs.getInt("salary");
-			System.out.println(rs.getInt("id")+"\t"+rs.getString("name")+"\t"+ rs.getString("gender")+"\t"+rs.getInt("salary"));
-
-			}
-		return null;
-		
-	}
-
-	@Override
-	public employee getEmpByName(String Name) throws SQLException {
-		Statement statement= connection.createStatement();
-	     ResultSet rs = statement.executeQuery(String.format(GETEMPNAME, Name));
-			if (rs.next())
-			{
-			rs.getInt("id");
-			rs.getString("name");
-			rs.getInt("salary");
-			System.out.println(rs.getInt("id")+"\t"+rs.getString("name")+"\t"+ rs.getString("gender")+"\t"+rs.getInt("salary"));
-
-			}
-		return null;
-	}
-
-	@Override
-	public List getAllEmp() throws SQLException {
-		Statement statement = connection.createStatement();
-		ResultSet rs = statement.executeQuery(GETALLEMP);
-		
-//		list lst = new list(4,null);
-		
-		return null;
-	}
-
-	@Override
-	public void printAllEmp() throws SQLException {
-		Statement statement = connection.createStatement();
-		ResultSet rs = statement.executeQuery("Select * from employee");
-		while(rs.next()) {
-			rs.getInt("id");
-			rs.getString("name");
-			rs.getInt("salary");
-			System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+ rs.getString(3)+"\t"+rs.getInt(4));
-		}
-		
-	}
-
-
 }
